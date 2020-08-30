@@ -1,10 +1,10 @@
 import React,{Component} from 'react';
-
 import './App.css';
 
 const sounds = [
   {
     key: 'Q',
+    type: 'Heater',
     mp3: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3'
   },
   {
@@ -41,12 +41,28 @@ const sounds = [
   },
 ];
 
+//const style = this.props.togglePower ? {background: "#0ad82c"} : {background: "#063d0f", boxShadow: "none"};
 
 
-  const App =()=>(
-    <div id="wrapper">
+class App  extends Component
+{
+  constructor(props){
+    super(props);
+    this.state={
+      power: true
+    }
+  
+  }
+
+ 
+
+  render(){
+    return(
+<div id="wrapper">
+      <h1> DRUM MACHINE</h1>
     <div id="drum-machine" className="container">
     <div id="display" className="display">
+         
       <h1>Play a sound</h1>
             {sounds.map((sound,idx)=>(
               <Box text={sound.key} key={idx} audio={sound.mp3}/>
@@ -54,19 +70,22 @@ const sounds = [
       </div>
       </div>
       </div>
-  );
-  
+    )
+  }
+}
+
+ 
 
 class Box extends Component{
-  state={
-    currentId:''
-  }
+ 
   constructor(props)
   {
     super(props);
+    
     this.audio=React.createRef();
   }
-  
+//  box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+//transform: scale(1.2) rotate(20deg);
   componentDidMount(){
   
     this.audio.current.addEventListener('ended',(e)=>{
@@ -75,12 +94,14 @@ class Box extends Component{
     });
   }
     playSound=()=>{
+     
       const id=this.audio.current.id;
       this.audio.current.play();
       const parent= this.audio.current.parentNode;
       parent.classList.add('active');
      const display=parent.parentNode;
      display.querySelector('h1').innerText=`${id} is Playing`;
+     
     }
       
     
@@ -88,18 +109,16 @@ class Box extends Component{
         
         const{text,audio }=this.props;
         return(
-    <div className="box" onClick={this.playSound} id={`drum-${text}`}>
-        
+      <div className="box" onClick={this.playSound} id={`drum-${text}`}>
         {text}
         <audio ref={this.audio} src={audio} className="clip" id={text}/>
         </div>
-      )
-        
+      ) 
       }
     }
 
     document.addEventListener('keydown',(e)=>{
-      const id=e.key.toUpperCase();
+      const id=e.type;
       const audio=document.getElementById(id);
       if(audio)
       {
