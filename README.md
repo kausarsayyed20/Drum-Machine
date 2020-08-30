@@ -1,5 +1,5 @@
 ## Demo
- Live Demo **here** : https://kausarsayyed20.github.io/Drum-Machine/
+ Live Demo **here** : http://kausarsayyed20.github.io/Drum-Machine
 
 
 
